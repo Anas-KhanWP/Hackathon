@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Resume Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="resume-container">
+        <header>
+            <div class="profile">
+                <img src="profile.png" alt="Profile Picture" class="profile-pic">
+                <div class="profile-info">
+                    <h1>John Doe</h1>
+                    <p class="contact">Contact: <a href="mailto:john.doe@example.com">john.doe@example.com</a> | +123
+                        456 7890</p>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section id="education" class="resume-section">
+                <h2 class="section-title">Education</h2>
+                <p>Bachelor of Science in Computer Science</p>
+                <p>University of XYZ, 2015-2019</p>
+            </section>
+
+            <section id="skills" class="resume-section">
+                <h2 class="section-title">Skills</h2>
+                <ul>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                    <li>TypeScript</li>
+                </ul>
+            </section>
+            <button id="toggle-skills" class="toggle-btn">Toggle Skills</button>
+
+            <section id="work-experience" class="resume-section">
+                <h2 class="section-title">Work Experience</h2>
+                <p>Software Developer at ABC Corp, 2019-Present</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 John Doe. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="./dist/index.js"></script>
+</body>
+
+</html>
