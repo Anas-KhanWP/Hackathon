@@ -2,11 +2,11 @@ body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
     margin: 0;
-    padding: 0;
+    padding: 70px 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 .resume-container {
@@ -14,7 +14,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 800px;
+    max-width: 900px;
     width: 100%;
     transition: transform 0.3s ease;
 }
@@ -64,6 +64,11 @@ header {
     text-decoration: underline;
 }
 
+.location {
+    color: #555;
+    font-size: 1rem;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -85,14 +90,7 @@ main {
     padding-bottom: 5px;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-ul li {
+#skills ul li {
     background: #007BFF;
     color: #fff;
     margin-bottom: 5px;
@@ -100,6 +98,32 @@ ul li {
     border-radius: 5px;
     width: fit-content;
     margin-right: 5px;
+    width: fit-content;
+}
+
+#skills ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+ul li {
+    padding: 5px;
+    border-radius: 5px;
+    width: fit-content;
+    margin: 0;
+}
+
+.job,
+.project {
+    margin-bottom: 15px;
+}
+
+.job h3,
+.project h3 {
+    margin: 0;
+    color: #333;
 }
 
 .toggle-btn {
