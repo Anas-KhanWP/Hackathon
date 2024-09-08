@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const educationContainerForPen = document.getElementById('resume-education-details') as HTMLDivElement;
     const skillsContainerForPen = document.getElementById('resume-skills-list') as HTMLDivElement;
     const workExperienceContainerForPen = document.getElementById('experiences') as HTMLDivElement;
+    const shareSection = document.getElementById('share-section') as HTMLDivElement;
+    const resumeLinkInput = document.getElementById('resume-link') as HTMLInputElement;
+    const copyLinkButton = document.getElementById('copy-link') as HTMLButtonElement;
+
 
     // Initially hide the resume container
     resumeContainer.style.display = 'none';
@@ -280,8 +284,56 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listener for the "Add Education" button
     addEducationButton.addEventListener('click', addEducationEntry);
 
+    function serializeResumeData(): object {
+        const name = (document.getElementById('name') as HTMLInputElement).value;
+        const email = (document.getElementById('email') as HTMLInputElement).value;
+        const phone = (document.getElementById('phone') as HTMLInputElement).value;
+        const username = (document.getElementById('username') as HTMLInputElement).value;
+
+        // Collect work experiences
+        const workExperiences = Array.from(workExperienceContainer.querySelectorAll('.job')).map((jobDiv) => {
+            return {
+                jobTitle: (jobDiv.querySelector('.jobTitle') as HTMLInputElement).value,
+                company: (jobDiv.querySelector('.companyTitle') as HTMLInputElement).value,
+                startDate: (jobDiv.querySelector('.startDateInput') as HTMLInputElement).value,
+                endDate: (jobDiv.querySelector('.endDateInput') as HTMLInputElement).value,
+                currentlyWorking: (jobDiv.querySelector('.currentlyWorking') as HTMLInputElement).checked,
+                responsibilities: Array.from((jobDiv.querySelector('.responsibilities-list') as HTMLUListElement).children).map((li) => {
+                    return (li.querySelector('input') as HTMLInputElement).value;
+                })
+            };
+        });
+
+        // Collect skills
+        const skills = Array.from(skillsContainer.querySelectorAll('.skill-input')).map((input) => {
+            return (input as HTMLInputElement).value;
+        });
+
+        // Collect education entries
+        const educationEntries = Array.from(educationContainer.querySelectorAll('.education-entry')).map((entry) => {
+            return {
+                degree: (entry.querySelector('.degreeInput') as HTMLInputElement).value,
+                institution: (entry.querySelector('.schoolInput') as HTMLInputElement).value,
+                startDate: (entry.querySelector('.startDateInput') as HTMLInputElement).value,
+                endDate: (entry.querySelector('.endDateInput') as HTMLInputElement).value,
+                currentlyAttending: (entry.querySelector('.currentlyAttending') as HTMLInputElement).checked
+            };
+        });
+
+        // Return the serialized data
+        return {
+            name,
+            email,
+            phone,
+            username,
+            workExperiences,
+            skills,
+            education: educationEntries,
+        };
+    }
+
     // Form submission handling
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         // Hide the form with a smooth transition
@@ -290,6 +342,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Show the loader
         loader.style.display = 'block';
+
+        const resumeData = serializeResumeData();
+
+        try {
+            const response = await fetch('/save-resume', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: (document.getElementById('username') as HTMLInputElement).value,
+                    resumeData
+                }),
+            });
+
+            if (response.ok) {
+                const { link } = await response.json();
+                resumeLinkInput.value = link;
+                shareSection.style.display = 'block';
+            } else {
+                alert('Error saving resume');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            loader.style.transition = 'opacity 0.5s ease';
+            loader.style.opacity = '0';
+            loader.style.display = 'none';
+            form.style.display = 'none';
+            resumeContainer.style.opacity = '1';
+            formSectionHead.style.display = 'none';
+        }
 
         setTimeout(() => {
             // After the transition and short delay, hide the form completely
@@ -305,6 +389,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = (document.getElementById('email') as HTMLInputElement).value;
             const phone = (document.getElementById('phone') as HTMLInputElement).value;
             // const education = (document.getElementById('education') as HTMLTextAreaElement).value;
+
+            const username = (document.getElementById('username') as HTMLInputElement).value;
+
+            // Generate the resume link (assuming the resume is saved at the backend)
+            const resumeLink = `./resume/${username}`;
+            resumeLinkInput.value = resumeLink;
+
+            // Show share section
+            shareSection.style.display = 'block';
 
             // Update resume
             (document.getElementById('resume-name') as HTMLElement).textContent = name;
@@ -400,5 +493,11 @@ document.addEventListener('DOMContentLoaded', () => {
             formSectionHead.style.display = 'none';
             resumeContainer.style.opacity = '1';
         }, 1000);
+
+        copyLinkButton.addEventListener('click', () => {
+            resumeLinkInput.select();
+            document.execCommand('copy');
+            alert('Resume link copied to clipboard!');
+        });
     });
 });

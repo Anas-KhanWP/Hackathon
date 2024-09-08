@@ -1,5 +1,6 @@
 "use strict";
 document.addEventListener('DOMContentLoaded', () => {
+    var _a;
     const form = document.getElementById('resume-form');
     const workExperienceContainer = document.getElementById('work-experience-container');
     const skillsContainer = document.getElementById('skills-container');
@@ -15,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const educationContainerForPen = document.getElementById('resume-education-details');
     const skillsContainerForPen = document.getElementById('resume-skills-list');
     const workExperienceContainerForPen = document.getElementById('experiences');
+    const resumeActions = document.getElementById('resume-actions');
+    const shareLink = document.getElementById('share-link');
+    const downloadPDFButton = document.getElementById('download-pdf');
     // Initially hide the resume container
     resumeContainer.style.display = 'none';
     loader.style.display = 'none';
@@ -29,6 +33,23 @@ document.addEventListener('DOMContentLoaded', () => {
         container.classList.add('editable-section');
         container.appendChild(editIcon);
     }
+    resumeActions.style.display = 'none';
+    // Function to generate a unique URL based on username
+    function generateUniqueURL(username) {
+        return `./resume${username}`;
+    }
+    // Function to update the share link
+    function updateShareLink(url) {
+        shareLink.href = `https://${url}`;
+        shareLink.textContent = `https://${url}`;
+    }
+    // Function to download resume as PDF
+    (_a = document.getElementById('download-pdf')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.text("Hello world!", 10, 10);
+        doc.save('resume.pdf');
+    });
     // Function to show the edit form
     function showEditForm(sectionType) {
         resumeContainer.style.display = 'none';
@@ -243,6 +264,10 @@ document.addEventListener('DOMContentLoaded', () => {
             resumeContainer.style.opacity = '0';
             resumeContainer.style.display = 'block';
             resumeContainer.style.transition = 'opacity 0.5s ease';
+            const username = document.getElementById('username').value;
+            const url = generateUniqueURL(username);
+            // Update share link
+            updateShareLink(url);
             // Get form data
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;

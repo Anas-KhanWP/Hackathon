@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic Resume Builder</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 </head>
 
 <body>
@@ -16,6 +18,8 @@
             <form id="resume-form">
                 <fieldset>
                     <legend>Personal Information</legend>
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required>
                     <label for="email">Email:</label>
@@ -34,17 +38,13 @@
 
                 <fieldset>
                     <legend>Work Experience</legend>
-                    <div id="work-experience-container">
-                        <!-- Work Experience entries will be dynamically added here -->
-                    </div>
+                    <div id="work-experience-container"></div>
                     <button type="button" id="add-work-experience">Add Work Experience</button>
                 </fieldset>
 
                 <fieldset>
                     <legend>Skills</legend>
-                    <div id="skills-container">
-                        <!-- Skills entries will be dynamically added here -->
-                    </div>
+                    <div id="skills-container"></div>
                     <button type="button" id="add-skill">Add Skill</button>
                 </fieldset>
 
@@ -70,23 +70,26 @@
                 <main>
                     <section id="resume-education" class="resume-section">
                         <h2 class="section-title">Education</h2>
-                        <p id="resume-education-details">Bachelor of Science in Computer Science</p>
+                        <div id="resume-education-details"></div>
                     </section>
 
                     <section id="resume-work-experience" class="resume-section">
                         <h2 class="section-title">Work Experience</h2>
-                        <div id="experiences">
-                            <!-- Work Experience entries will be dynamically added here -->
-                        </div>
+                        <div id="experiences"></div>
                     </section>
 
                     <section id="resume-skills" class="resume-section">
                         <h2 class="section-title">Skills</h2>
-                        <ul id="resume-skills-list">
-                            <!-- Skills will be dynamically added here -->
-                        </ul>
+                        <ul id="resume-skills-list"></ul>
                     </section>
                 </main>
+
+                <section id="share-section" style="display: none;">
+                    <h2>Share Your Resume</h2>
+                    <p>Share your resume using the link below:</p>
+                    <input type="text" id="resume-link" readonly>
+                    <button id="copy-link">Copy Link</button>
+                </section>
 
                 <footer>
                     <p>&copy; 2024 John Doe. All rights reserved.</p>
@@ -96,12 +99,12 @@
     </div>
 
     <div id="loader" class="loader"></div>
-    
+
     <div id="edit-form-container" style="display: none;">
         <!-- The form will be dynamically inserted here -->
     </div>
 
-    <script src="./dist/index.js"></script>
+    <script type="module" src="./dist/index.js"></script>
 </body>
 
 </html>

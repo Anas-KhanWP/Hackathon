@@ -316,3 +316,56 @@ footer {
 #submitButton {
     width: 100%;
 }
+
+/* New styles for sharing and downloading */
+#resume-actions {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#resume-actions p {
+    margin-bottom: 10px;
+}
+
+#resume-actions a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+#resume-actions a:hover {
+    text-decoration: underline;
+}
+
+#resume-actions button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#resume-actions button:hover {
+    background-color: #2980b9;
+}
+
+#share-section {
+    margin-top: 20px;
+}
+
+#resume-link {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+#copy-link {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
