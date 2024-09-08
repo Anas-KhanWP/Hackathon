@@ -15,7 +15,8 @@
   "description": "",
   "devDependencies": {
     "lite-server": "^2.6.1",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "rimraf": "^5.0.0"
   },
   "dependencies": {
     "@types/express": "^4.17.21",
